@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>おでかけ詳細・編集</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<style>
+		body {
+			font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+			background-color: #f9f9f9;
+			margin: 0;
+			padding: 0;
+		}
+
+		header {
+			background-color: #4CAF50;
+			color: white;
+			padding: 15px;
+			text-align: center;
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 30px;
+			color: #333;
+		}
+
+		form {
+			max-width: 600px;
+			margin: 30px auto;
+			background-color: #fff;
+			padding: 25px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+			color: #555;
+		}
+
+		input[type="text"],
+		textarea,
+		select {
+			width: 100%;
+			padding: 8px;
+			margin-bottom: 20px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+
+		button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		.header-info {
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div class="header-info">
+			ようこそ、<span th:text="${username}">ユーザー名</span> さん！　
+			<span th:text="${today}">日付</span>
+		</div>
+	</header>
+
+	<h1>おでかけ詳細・編集</h1>
+
+	<form th:action="@{/updateOdekake}" method="post" th:object="${odekakeDto}">
+		<!-- タイトルは編集不可にする場合は readonly -->
+		<label for="title">タイトル（変更不可）:</label>
+		<input type="text" id="title" th:field="*{title}" readonly />
+
+		<label for="body">本文:</label>
+		<textarea id="body" th:field="*{body}" rows="5" required></textarea>
+
+		<label for="url1">サイトURL1:</label>
+		<input type="text" id="url1" th:field="*{url1}" />
+
+		<label for="url2">サイトURL2:</label>
+		<input type="text" id="url2" th:field="*{url2}" />
+
+		<label for="season">行きたい季節:</label>
+		<select id="season" th:field="*{season}">
+			<option value="春">春</option>
+			<option value="夏">夏</option>
+			<option value="秋">秋</option>
+			<option value="冬">冬</option>
+			<option value="いつでも！">いつでも！</option>
+		</select>
+
+		<label for="remarks">備考:</label>
+		<textarea id="remarks" th:field="*{remarks}" rows="3"></textarea>
+
+		<label for="visited">訪問状況:</label>
+		<select id="visited" th:field="*{visited}">
+			<option value="Y">訪問済み</option>
+			<option value="N">未訪問</option>
+		</select>
+
+		<!-- 作成者・作成日時は表示のみ -->
+		<p>作成者: <span th:text="*{createdBy}">作成者</span></p>
+		<p>作成日時: <span th:text="*{createdAt}">作成日時</span></p>
+
+		<div class="button-group">
+			<a th:href="@{/backtop}" class="back-button">戻る</a>
+			<a th:href="@{/inputOdekakeEdit(id=${odekakeDto.id}, title=${odekakeDto.title})}" class="edit-button">編集</a>
+		</div>
+	</form>
+</body>
+
+</html>

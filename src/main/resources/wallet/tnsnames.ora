@@ -1,0 +1,12 @@
+odekakedb_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=g137ec8df93f91d_odekakedb_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+odekakedb_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=g137ec8df93f91d_odekakedb_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+odekakedb_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=g137ec8df93f91d_odekakedb_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+odekakedb_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=g137ec8df93f91d_odekakedb_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+odekakedb_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=g137ec8df93f91d_odekakedb_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+

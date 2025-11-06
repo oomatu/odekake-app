@@ -1,0 +1,142 @@
+.button-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.back-button {
+	background-color: #ccc;
+	color: #333;
+}
+
+.back-button:hover {
+	background-color: #bbb;
+}
+
+.save-button {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.save-button:hover {
+	background-color: #45a049;
+}
+
+.back-button {
+	display: inline-block;
+	background-color: #ccc;
+	color: #333;
+	padding: 10px 20px;
+	text-decoration: none;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.back-button:hover {
+	background-color: #bbb;
+}
+
+.title-table {
+	width: 90%;
+	max-width: 800px;
+	margin: 30px auto;
+	border-collapse: collapse;
+	background-color: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	font-size: 15px;
+}
+
+.title-table th,
+.title-table td {
+	border: 1px solid #ddd;
+	padding: 12px 16px;
+	text-align: left;
+}
+
+.title-table th {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.title-table tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.title-table a {
+	color: #2196F3;
+	text-decoration: none;
+}
+
+.title-table a:hover {
+	text-decoration: underline;
+}
+.title-table td {
+	text-align: center;
+}
+.title-table {
+	width: 90%;
+	max-width: 800px;
+	margin: 30px auto;
+	border-collapse: collapse;
+	background-color: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	table-layout: fixed; /* ← 列幅を固定する */
+}
+
+.title-table th,
+.title-table td {
+	border: 1px solid #ddd;
+	padding: 12px 16px;
+	text-align: center; /* ← 全部中央寄せに統一 */
+	word-wrap: break-word; /* ← 長いURLも折り返す */
+}
+
+.title-table th {
+	background-color: #4CAF50;
+	color: white;
+}
+.title-table {
+	width: 90%;
+	max-width: 800px;
+	margin: 30px auto;
+	border-collapse: collapse;
+	background-color: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	table-layout: fixed;
+	border: 2px solid #4CAF50; /* ← テーブル全体の枠を太く */
+}
+
+.title-table th,
+.title-table td {
+	border: 1px solid #4CAF50; /* ← セルの枠も統一して太く */
+	padding: 12px 16px;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+.title-table th {
+	background-color: #4CAF50;
+	color: white;
+}
+.edit-button {
+	background-color: #4CAF50;
+	color: #333;
+}
+
+.edit-button:hover {
+	background-color: #4CAF50;
+}
+.edit-button {
+	display: inline-block;
+	background-color: #4CAF50;
+	color: #333;
+	padding: 10px 20px;
+	text-decoration: none;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.edit-button:hover {
+	background-color: #4CAF50;
+}
