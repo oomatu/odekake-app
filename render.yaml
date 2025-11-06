@@ -1,9 +1,5 @@
 services:
   - type: web
     name: odekake-app
-    env: java
-    buildCommand: "./gradlew build"
-    startCommand: "java -jar build/libs/Odekake-0.0.1-SNAPSHOT.jar"
-    envVars:
-      - key: JAVA_VERSION
-        value: 17
+    env: docker
+    plan: free
