@@ -1,15 +1,13 @@
-# ベースイメージ（Java 17）
 FROM eclipse-temurin:17-jdk
 
-# 作業ディレクトリを作成
 WORKDIR /app
 
-# Gradleキャッシュを活用するなら build.gradle などを先にコピー
+# 必要ファイルを先にコピー
 COPY build.gradle settings.gradle gradlew /app/
 COPY gradle /app/gradle
 
-# 依存関係を先に解決（キャッシュ効率化）
-RUN ./gradlew dependencies
+# gradlewに実行権限を付与
+RUN chmod +x gradlew
 
 # 残りのソースコードをコピー
 COPY . /app
@@ -17,5 +15,5 @@ COPY . /app
 # ビルド
 RUN ./gradlew build
 
-# JARファイルを実行
+# 実行
 CMD ["java", "-jar", "build/libs/Odekake-0.0.1-SNAPSHOT.jar"]
