@@ -13,7 +13,8 @@ RUN chmod +x gradlew
 COPY . /app
 
 # ビルド
-RUN ./gradlew build
+RUN ./gradlew build --stacktrace --info
+
 
 # 実行
 CMD ["java", "-jar", "build/libs/Odekake-0.0.1-SNAPSHOT.jar"]
