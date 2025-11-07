@@ -1,11 +1,7 @@
-build:
-  steps:
-    - name: Install Java
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y openjdk-17-jdk
-    - name: Build with Gradle
-      run: |
-        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-        export PATH=$JAVA_HOME/bin:$PATH
-        ./gradlew build
+services:
+  - type: web
+    name: odekake-app
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    autoDeploy: true
