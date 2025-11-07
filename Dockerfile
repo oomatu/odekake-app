@@ -1,5 +1,5 @@
 FROM amazoncorretto:17 AS build
-
+COPY wallet /app/wallet
 WORKDIR /home/app
 COPY . .
 
