@@ -5,52 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>おでかけ記録</title>
-	<style>
-		body {
-			font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
-			background-color: #f0f8ff;
-			margin: 0;
-			padding: 0;
-		}
-
-		header {
-			background-color: #4CAF50;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-
-		.header-info {
-			font-size: 16px;
-		}
-
-		h1 {
-			text-align: center;
-			margin-top: 40px;
-			color: #333;
-		}
-
-		form {
-			display: flex;
-			justify-content: center;
-			margin-top: 30px;
-		}
-
-		button {
-			background-color: #4CAF50;
-			color: white;
-			padding: 12px 24px;
-			font-size: 18px;
-			border: none;
-			border-radius: 6px;
-			cursor: pointer;
-			transition: background-color 0.3s ease;
-		}
-
-		button:hover {
-			background-color: #45a049;
-		}
-	</style>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 </head>
 
@@ -67,33 +22,35 @@
 	<form th:action="@{/inputOdekakeNew}" method="post">
 		<button type="submit">行きたい場所</button>
 	</form>
-	<h2 style="text-align:center; margin-top: 40px;">保存済みタイトル一覧</h2>
+	<h2 class="subtitle">行きたい場所リスト</h2>
 
-	<table class="title-table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>タイトル</th>
-				<th>訪問</th>
-				<th>URL</th>
-				<th>作成者</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="info : ${titleList}">
-				<td th:text="${info.id}">ID</td>
-				<td>
-					<a th:href="@{/detailOdekake(id=${info.id}, title=${info.title})}" th:text="${info.title}">タイトル</a>
-				</td>
-				<td>
-					<span th:if="${info.visited == 'Y'}">行った！</span>
-					<span th:unless="${info.visited == 'Y'}">行ってない！</span>
-				</td>
-				<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
-				<td th:text="${info.createdBy}">作成者</td>
-			</tr>
-		</tbody>
-	</table>
+	<div style="overflow-x: auto; padding: 0 10px;">
+		<table class="title-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>タイトル</th>
+					<th>URL</th>
+					<th>訪問</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="info : ${titleList}">
+					<td th:text="${info.id}">ID</td>
+					<td>
+						<a th:href="@{/detailOdekake(id=${info.id}, title=${info.title})}"
+							th:text="${info.title}">タイトル</a>
+					</td>
+					<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
+					<td>
+						<span th:if="${info.visited == 'Y'}">行った！</span>
+						<span th:unless="${info.visited == 'Y'}">行ってない！</span>
+					</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

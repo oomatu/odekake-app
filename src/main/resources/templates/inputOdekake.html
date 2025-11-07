@@ -5,74 +5,7 @@
 	<meta charset="UTF-8">
 	<title>おでかけ入力画面</title>
 	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<style>
-		body {
-			font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
-			background-color: #f9f9f9;
-			margin: 0;
-			padding: 0;
-		}
-
-		header {
-			background-color: #4CAF50;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-
-		h1 {
-			text-align: center;
-			margin-top: 30px;
-			color: #333;
-		}
-
-		form {
-			max-width: 600px;
-			margin: 30px auto;
-			background-color: #fff;
-			padding: 25px;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
-
-		label {
-			display: block;
-			margin-bottom: 5px;
-			font-weight: bold;
-			color: #555;
-		}
-
-		input[type="text"],
-		textarea,
-		select {
-			width: 100%;
-			padding: 8px;
-			margin-bottom: 20px;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			box-sizing: border-box;
-			font-size: 14px;
-		}
-
-		button {
-			background-color: #4CAF50;
-			color: white;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 4px;
-			font-size: 16px;
-			cursor: pointer;
-		}
-
-		button:hover {
-			background-color: #45a049;
-		}
-
-		.header-info {
-			font-size: 16px;
-		}
-	</style>
-</head>
+	</head>
 
 <body>
 	<header>
@@ -84,9 +17,8 @@
 
 	<h1>おでかけ入力画面</h1>
 
-	<form th:action="${mode == 'edit'} ? @{/updateOdekake(id=${odekakeDto.id})} : @{/saveOdekakeInfo}" method="post" th:object="${odekakeDto}">
-		<!-- 入力項目はそのまま -->
-
+	<form th:action="${mode == 'edit'} ? @{/updateOdekake(id=${odekakeDto.id})} : @{/saveOdekakeInfo}" method="post"
+		th:object="${odekakeDto}" class="input-form">
 		<label for="title">タイトル（30文字まで）:</label>
 		<input type="text" id="title" th:field="*{title}" maxlength="30" required />
 
@@ -111,7 +43,6 @@
 		<label for="remarks">備考:</label>
 		<textarea id="remarks" th:field="*{remarks}" rows="3"></textarea>
 
-		<!-- ボタン配置 -->
 		<div class="button-group">
 			<a th:href="@{/backtop}" class="back-button">戻る</a>
 			<button type="submit" th:text="${mode == 'edit'} ? '更新' : '保存'"></button>

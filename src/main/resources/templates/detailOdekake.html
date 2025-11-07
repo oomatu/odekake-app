@@ -5,74 +5,7 @@
 	<meta charset="UTF-8">
 	<title>おでかけ詳細・編集</title>
 	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<style>
-		body {
-			font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
-			background-color: #f9f9f9;
-			margin: 0;
-			padding: 0;
-		}
-
-		header {
-			background-color: #4CAF50;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-
-		h1 {
-			text-align: center;
-			margin-top: 30px;
-			color: #333;
-		}
-
-		form {
-			max-width: 600px;
-			margin: 30px auto;
-			background-color: #fff;
-			padding: 25px;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
-
-		label {
-			display: block;
-			margin-bottom: 5px;
-			font-weight: bold;
-			color: #555;
-		}
-
-		input[type="text"],
-		textarea,
-		select {
-			width: 100%;
-			padding: 8px;
-			margin-bottom: 20px;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			box-sizing: border-box;
-			font-size: 14px;
-		}
-
-		button {
-			background-color: #4CAF50;
-			color: white;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 4px;
-			font-size: 16px;
-			cursor: pointer;
-		}
-
-		button:hover {
-			background-color: #45a049;
-		}
-
-		.header-info {
-			font-size: 16px;
-		}
-	</style>
-</head>
+	</head>
 
 <body>
 	<header>
@@ -84,8 +17,7 @@
 
 	<h1>おでかけ詳細・編集</h1>
 
-	<form th:action="@{/updateOdekake}" method="post" th:object="${odekakeDto}">
-		<!-- タイトルは編集不可にする場合は readonly -->
+	<form th:action="@{/updateOdekake}" method="post" th:object="${odekakeDto}" class="detail-form">
 		<label for="title">タイトル（変更不可）:</label>
 		<input type="text" id="title" th:field="*{title}" readonly />
 
@@ -116,7 +48,6 @@
 			<option value="N">未訪問</option>
 		</select>
 
-		<!-- 作成者・作成日時は表示のみ -->
 		<p>作成者: <span th:text="*{createdBy}">作成者</span></p>
 		<p>作成日時: <span th:text="*{createdAt}">作成日時</span></p>
 
