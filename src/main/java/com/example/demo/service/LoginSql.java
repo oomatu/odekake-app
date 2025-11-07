@@ -20,7 +20,6 @@ public class LoginSql {
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					pass = rs.getString("password");
-					System.out.println("パスワード: " + pass);
 				}
 			}
 

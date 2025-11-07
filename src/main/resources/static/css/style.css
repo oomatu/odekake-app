@@ -8,6 +8,22 @@ body {
 	box-sizing: border-box;
 }
 
+input,
+textarea,
+select {
+	font-size: 16px;
+	/* iOSでズームされないように */
+}
+
+html {
+	touch-action: manipulation;
+}
+
+@viewport {
+	zoom: 1.0;
+	width: device-width;
+}
+
 *,
 *::before,
 *::after {
@@ -196,12 +212,12 @@ button:hover {
 
 .title-table th:nth-child(1),
 .title-table td:nth-child(1) {
-	width: 5%;
+	width: 10%;
 }
 
 .title-table th:nth-child(2),
 .title-table td:nth-child(2) {
-	width: 53%;
+	width: 43%;
 }
 
 .title-table th:nth-child(3),

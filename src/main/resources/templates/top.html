@@ -17,7 +17,10 @@
 		</div>
 	</header>
 
-	<h1>おでかけ記録</h1>
+	<h1 style="text-align: center;">
+		おでかけ記録
+		<img src="/images/miffy.png" alt="ミッフィー" style="height: 50px; vertical-align: middle; margin-left: 10px;">
+	</h1>
 
 	<form th:action="@{/inputOdekakeNew}" method="post">
 		<button type="submit">行きたい場所</button>
@@ -30,7 +33,6 @@
 				<th>ID</th>
 				<th>タイトル</th>
 				<th>URL</th>
-				<th>訪問</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,10 +42,6 @@
 					<a th:href="@{/detailOdekake(id=${info.id}, title=${info.title})}" th:text="${info.title}">タイトル</a>
 				</td>
 				<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
-				<td>
-					<span th:if="${info.visited == 'Y'}">〇</span>
-					<span th:unless="${info.visited == 'Y'}">×</span>
-				</td>
 			</tr>
 		</tbody>
 	</table>
