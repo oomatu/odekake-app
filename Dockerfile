@@ -1,6 +1,6 @@
 FROM amazoncorretto:17 AS build
 COPY ./ /home/app
-RUN cd /home/app && ./gradlew build
+RUN ./gradlew build -x test --stacktrace --info
 
 FROM amazoncorretto:17-alpine
 COPY --from=build /home/app/build/libs/Odekake-0.0.1-SNAPSHOT.jar /usr/local/lib/spring-render-deploy.jar
