@@ -1,5 +1,5 @@
 # ベースイメージ（Java 17）
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 # 作業ディレクトリを作成
 WORKDIR /app
