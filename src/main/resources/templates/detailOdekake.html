@@ -3,50 +3,55 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>おでかけ詳細・編集</title>
+	<title>おでかけ詳細</title>
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 	</head>
 
 <body>
 	<header>
 		<div class="header-info">
-			ようこそ、<span th:text="${username}">ユーザー名</span> さん！　
+			ようこそ、<span th:text="${username}">ユーザー名</span> さん！
 			<span th:text="${today}">日付</span>
 		</div>
 	</header>
 
-	<h1>おでかけ詳細・編集</h1>
+	<h1>おでかけ詳細</h1>
 
 	<form th:action="@{/updateOdekake}" method="post" th:object="${odekakeDto}" class="detail-form">
-		<label for="title">タイトル（変更不可）:</label>
+        <input type="hidden" th:field="*{id}" />
+        
+		<label for="title">タイトル:</label>
 		<input type="text" id="title" th:field="*{title}" readonly />
 
 		<label for="body">本文:</label>
-		<textarea id="body" th:field="*{body}" rows="5" required></textarea>
-
-		<label for="url1">サイトURL1:</label>
-		<input type="text" id="url1" th:field="*{url1}" />
-
-		<label for="url2">サイトURL2:</label>
-		<input type="text" id="url2" th:field="*{url2}" />
-
-		<label for="season">行きたい季節:</label>
-		<select id="season" th:field="*{season}">
-			<option value="春">春</option>
-			<option value="夏">夏</option>
-			<option value="秋">秋</option>
-			<option value="冬">冬</option>
-			<option value="いつでも！">いつでも！</option>
-		</select>
+		<textarea id="body" th:field="*{body}" rows="5" readonly></textarea>
+        
+		<label>サイトURL1:</label>
+		<p th:if="*{url1}">
+            <a th:href="*{url1}" th:text="*{url1}" target="_blank"></a>
+        </p>
+        <p th:unless="*{url1}">
+            <span style="color: #888;">なし</span>
+        </p>
+        
+		<label>サイトURL2:</label>
+		<p th:if="*{url2}">
+            <a th:href="*{url2}" th:text="*{url2}" target="_blank"></a>
+        </p>
+        <p th:unless="*{url2}">
+            <span style="color: #888;">なし</span>
+        </p>
+        
+        <label for="season">行きたい季節:</label>
+		<input type="text" id="season" th:value="*{season}" readonly />
 
 		<label for="remarks">備考:</label>
-		<textarea id="remarks" th:field="*{remarks}" rows="3"></textarea>
-
-		<label for="visited">訪問状況:</label>
-		<select id="visited" th:field="*{visited}">
-			<option value="Y">訪問済み</option>
-			<option value="N">未訪問</option>
-		</select>
+		<textarea id="remarks" th:field="*{remarks}" rows="3" readonly></textarea>
+        
+		<label for="visited">行ったことあるか:</label>
+		<input type="text" id="visited" 
+            th:value="*{visited == 'Y' ? '行った！' : '行ってない！'}" 
+            readonly />
 
 		<p>作成者: <span th:text="*{createdBy}">作成者</span></p>
 		<p>作成日時: <span th:text="*{createdAt}">作成日時</span></p>

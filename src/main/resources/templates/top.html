@@ -24,32 +24,29 @@
 	</form>
 	<h2 class="subtitle">行きたい場所リスト</h2>
 
-	<div style="overflow-x: auto; padding: 0 10px;">
-		<table class="title-table">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>タイトル</th>
-					<th>URL</th>
-					<th>訪問</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="info : ${titleList}">
-					<td th:text="${info.id}">ID</td>
-					<td>
-						<a th:href="@{/detailOdekake(id=${info.id}, title=${info.title})}"
-							th:text="${info.title}">タイトル</a>
-					</td>
-					<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
-					<td>
-						<span th:if="${info.visited == 'Y'}">行った！</span>
-						<span th:unless="${info.visited == 'Y'}">行ってない！</span>
-					</td>
-					</tr>
-			</tbody>
-		</table>
-	</div>
+	<table class="title-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>タイトル</th>
+				<th>URL</th>
+				<th>訪問</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="info : ${titleList}">
+				<td th:text="${info.id}">ID</td>
+				<td>
+					<a th:href="@{/detailOdekake(id=${info.id}, title=${info.title})}" th:text="${info.title}">タイトル</a>
+				</td>
+				<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
+				<td>
+					<span th:if="${info.visited == 'Y'}">〇</span>
+					<span th:unless="${info.visited == 'Y'}">×</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -59,11 +56,14 @@
 			$('.title-table').DataTable({
 				language: {
 					url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/ja.json"
-				}
+				},
+				order: [],
+				columnDefs: [
+					{targets: [0, 1, 2], orderable: false}
+				]
 			});
 		});
 	</script>
-
 </body>
 
 </html>

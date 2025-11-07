@@ -1,13 +1,21 @@
 /* リセットと基本スタイル */
 body {
 	font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
-	background-color: #f0f8ff; /* top.htmlの背景色をデフォルトに設定 */
+	background-color: #f0f8ff;
 	margin: 0;
 	padding: 0;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 header {
-	background-color: #FF7F00; /* 変更: 緑からオレンジ */
+	background-color: #FF7F00;
 	color: white;
 	padding: 15px;
 	text-align: center;
@@ -29,16 +37,14 @@ h2.subtitle {
 	color: #333;
 }
 
-/* フォーム共通スタイル */
 form {
-	/* top.htmlのボタンフォームを中央寄せするために維持 */
 	display: flex;
-	justify-content: center; 
+	justify-content: center;
 	margin-top: 30px;
 }
 
 button[type="submit"] {
-	background-color: #FF7F00; /* 変更: 緑からオレンジ */
+	background-color: #FF7F00;
 	color: white;
 	padding: 12px 24px;
 	font-size: 18px;
@@ -49,7 +55,126 @@ button[type="submit"] {
 }
 
 button:hover {
-	background-color: #e67300; /* 変更: 緑のホバー色からオレンジのホバー色 */
+	background-color: #e67300;
+}
+
+/* ---------------------------------------------------- */
+/* DataTables (トップ画面のプルダウン・検索) の調整 (コンパクト表示を維持) */
+/* ---------------------------------------------------- */
+
+/* 「X件表示」のコンテナとラベル */
+.dataTables_wrapper .dataTables_length label {
+	font-size: 14px;
+	/* テキストを小さく */
+	font-weight: normal;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin: 5px 0;
+	padding: 0;
+}
+
+/* プルダウンメニュー自体 */
+.dataTables_wrapper .dataTables_length select {
+	padding: 3px 6px;
+	/* 小さくする */
+	height: auto;
+	font-size: 14px;
+	margin-bottom: 0;
+	width: auto;
+	display: inline-block;
+}
+
+/* 検索ボックスのラベルと入力フィールドも小さく調整 */
+.dataTables_wrapper .dataTables_filter label {
+	font-size: 14px;
+	font-weight: normal;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin: 5px 0;
+	padding: 0;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+	padding: 3px 6px;
+	height: auto;
+	font-size: 14px;
+	margin-bottom: 0;
+	width: auto;
+}
+
+/* ---------------------------------------------------- */
+/* login.html 用 */
+/* ---------------------------------------------------- */
+
+.login-page-layout {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	min-height: 100vh;
+}
+
+.login-container {
+	background-color: white;
+	padding: 2em;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 400px;
+	box-sizing: border-box;
+	margin-top: 80px;
+	margin-bottom: 0;
+}
+
+.login-container h1,
+.login-container h2 {
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+.login-container form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 0;
+}
+
+.login-container label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #555;
+	width: 100%;
+	text-align: left;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+	width: 100%;
+	padding: 0.5em;
+	margin: 0.5em 0 1em 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.login-container button[type="submit"] {
+	width: 100%;
+	max-width: 250px;
+	padding: 0.7em;
+	background-color: #FF7F00;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 1em;
+}
+
+.error-message {
+	color: red;
+	margin-bottom: 1em;
+	text-align: center;
 }
 
 /* ---------------------------------------------------- */
@@ -64,42 +189,48 @@ button:hover {
 	background-color: #fff;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 	table-layout: fixed;
-	border: 2px solid #FF7F00; /* 変更: 緑からオレンジ */
-	font-size: 15px; /* 基本フォントサイズを定義 */
+	border: 2px #FF7F00;
+	/* ★修正: テーブル全体の枠の色をオレンジに */
+	font-size: 15px;
 }
 
-/* 各列の幅を調整: ID, タイトル, URL, 訪問 の順 (4列) */
 .title-table th:nth-child(1),
 .title-table td:nth-child(1) {
-	width: 8%; /* ID列を小さく */
+	width: 5%;
 }
 
 .title-table th:nth-child(2),
 .title-table td:nth-child(2) {
-	width: 35%; /* タイトル列を長く */
+	width: 53%;
 }
 
 .title-table th:nth-child(3),
 .title-table td:nth-child(3) {
-	width: 32%; /* URL列 */
+	width: 25%;
+}
+
+.title-table td:nth-child(3) {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .title-table th:nth-child(4),
 .title-table td:nth-child(4) {
-	width: 25%; /* 訪問列 */
+	width: 7%;
 }
 
 .title-table th,
 .title-table td {
-	border: 1px solid #FF7F00; /* 変更: 緑からオレンジ */
+	border: 2px solid #FF7F00;
+	/* ★修正: セルの枠の色をオレンジに */
 	padding: 12px 16px;
 	text-align: center;
 	word-wrap: break-word;
-	white-space: normal; /* セル内改行を許可 */
 }
 
 .title-table th {
-	background-color: #FF7F00; /* 変更: 緑からオレンジ */
+	background-color: #FF7F00;
 	color: white;
 }
 
@@ -116,16 +247,23 @@ button:hover {
 	text-decoration: underline;
 }
 
+.title-table th {
+	background-color: #FF7F00;
+	color: white;
+	border-bottom-width: 3px;
+}
+
 /* ---------------------------------------------------- */
 /* detailOdekake.html / inputOdekake.html 用（入力・詳細フォーム） */
 /* ---------------------------------------------------- */
 
-.detail-form, .input-form {
-	display: block; 
-	
-	max-width: 700px; /* 拡大 */
-	margin: 50px auto; /* 上部余白を増加 */
-	
+.detail-form,
+.input-form {
+	display: block;
+
+	max-width: 700px;
+	margin: 15px auto 20px auto;
+
 	background-color: #fff;
 	padding: 25px;
 	border-radius: 8px;
@@ -145,20 +283,18 @@ textarea,
 select {
 	width: 100%;
 	padding: 8px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
 	font-size: 14px;
 }
 
-/* inputOdekake.html の保存・更新ボタン（フォーム内のボタン） */
 .input-form button[type="submit"] {
 	padding: 10px 20px;
 	font-size: 16px;
 }
 
-/* detailOdekake.html の戻る・編集ボタン */
 .button-group {
 	display: flex;
 	justify-content: space-between;
@@ -183,8 +319,8 @@ select {
 
 .edit-button {
 	display: inline-block;
-	background-color: #FF7F00; /* 変更: 緑からオレンジ */
-	color: white; /* 文字色を白に */
+	background-color: #FF7F00;
+	color: white;
 	padding: 10px 20px;
 	text-decoration: none;
 	border-radius: 4px;
@@ -193,82 +329,7 @@ select {
 }
 
 .edit-button:hover {
-	background-color: #e67300; /* 変更: 緑のホバー色からオレンジのホバー色 */
-}
-
-
-/* ---------------------------------------------------- */
-/* login.html 用 */
-/* ---------------------------------------------------- */
-
-/* 1. ログイン画面のbodyにのみ適用するレイアウトクラス */
-.login-page-layout {
-    display: flex;
-    justify-content: center; /* 水平方向は中央 */
-    align-items: flex-start; /* 垂直方向は上端に配置 */
-    min-height: 100vh;
-}
-
-.login-container {
-	background-color: white;
-	padding: 2em;
-	border-radius: 8px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 100%;
-	max-width: 400px;
-	box-sizing: border-box;
-	/* 上部に余白を設定 */
-	margin-top: 80px; 
-    margin-bottom: 0;
-}
-
-.login-container h1, .login-container h2 {
-	text-align: center;
-	margin-top: 0;
-	margin-bottom: 1em;
-}
-
-.login-container form {
-	display: flex; 
-	flex-direction: column;
-	align-items: center; /* 子要素（全体）を中央寄せにする */
-	margin-top: 0;
-}
-
-.login-container label {
-	display: block;
-	margin-bottom: 5px;
-	font-weight: bold;
-	color: #555;
-    width: 100%; /* ラベルの幅をコンテナ幅に広げる */
-    text-align: left; /* 追加: ラベル内のテキストを左揃えにする */
-}
-
-.login-container input[type="text"],
-.login-container input[type="password"] {
-	width: 100%;
-	padding: 0.5em;
-	margin: 0.5em 0 1em 0;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
-}
-
-.login-container button[type="submit"] {
-	width: 100%;
-    max-width: 250px; /* ボタンの幅を制限 */
-	padding: 0.7em;
-	background-color: #FF7F00; /* 変更: 緑からオレンジ */
-	color: white;
-	border: none;
-	border-radius: 4px;
-	font-size: 1em;
-}
-
-.error-message {
-	color: red;
-	margin-bottom: 1em;
-	text-align: center;
+	background-color: #e67300;
 }
 
 /* ---------------------------------------------------- */
@@ -279,7 +340,8 @@ select {
 
 	body {
 		padding: 0;
-		background-color: #fff; /* スマホでは背景色を白に */
+		background-color: #fff;
+		overflow-x: hidden;
 	}
 
 	h1,
@@ -292,7 +354,6 @@ select {
 		font-size: 14px;
 	}
 
-	/* top.html のボタンフォーム */
 	form {
 		margin-top: 20px;
 		flex-direction: column;
@@ -302,33 +363,45 @@ select {
 	button[type="submit"] {
 		font-size: 16px;
 		padding: 10px 20px;
-		width: 90%; /* ボタンを広く */
+		width: 90%;
 		max-width: 300px;
 	}
 
-	/* top.html の一覧テーブル */
 	.title-table {
 		width: 100%;
+		/* スマホでは幅いっぱいに広げる */
 		margin: 20px 0;
+		/* 中央寄せではなく端まで広げるため */
 		font-size: 12px;
 	}
+
 	.title-table th,
 	.title-table td {
-		padding: 8px;
+		border: 1px solid #FF7F00;
+		padding: 10px 14px;
+		text-align: center;
+		/* word-wrap: break-word; はURL以外の部分で長い単語を折り返すために残すか、削除 */
+		word-wrap: break-word;
+		white-space: normal;
+		/* 基本設定は残す */
 	}
 
-	/* detailOdekake / inputOdekake のフォーム */
-	.detail-form, .input-form {
-		/* スマホでの上部余白を調整 */
-		margin: 20px 10px 10px 10px; /* 上部を20pxに調整 */
+	.detail-form,
+	.input-form {
+		width: 100%;
+		margin: 0;
 		padding: 15px;
 		box-shadow: none;
+		/* スマホでは影を削除しても良い */
 		max-width: none;
+		box-sizing: border-box;
+		/* paddingを含めて幅100%にする */
 	}
 
 	input[type="text"],
 	textarea,
 	select {
+		margin-bottom: 10px;
 		font-size: 14px;
 	}
 
@@ -342,13 +415,12 @@ select {
 		width: 100%;
 		text-align: center;
 	}
-	
-	/* login.html のスタイル */
+
 	.login-container {
-		margin-top: 50px; /* スマホでは少し余白を減らす */
+		margin-top: 50px;
 		margin-bottom: 0;
 		padding: 1em;
 		box-shadow: none;
 	}
-	
+
 }
