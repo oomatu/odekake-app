@@ -10,8 +10,10 @@ public class InputOdekakeService {
 	public boolean insertOdekakeInfo(OdekakeDto odekakeDto) {
 
 		InputOdekakeSql inputOdekakeSql = new InputOdekakeSql();
+		int Id = inputOdekakeSql.selectNextId();
 		String Nickname = inputOdekakeSql.selectNickname(odekakeDto.getCreatedBy());
 		odekakeDto.setCreatedBy(Nickname);
+		odekakeDto.setId(Id);
 		boolean rs = inputOdekakeSql.insertOdekakeInfo(odekakeDto);
 
 		return rs;
