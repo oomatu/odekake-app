@@ -18,6 +18,11 @@ html {
 	touch-action: manipulation;
 }
 
+@viewport {
+	zoom: 1.0;
+	width: device-width;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -27,6 +32,7 @@ header {
 	color: white;
 	padding: 15px;
 	text-align: center;
+	width: 100%; 
 }
 
 .header-info {
@@ -45,6 +51,7 @@ h2.subtitle {
 	color: #333;
 }
 
+/* formタグ単体での中央寄せは維持 */
 form {
 	display: flex;
 	justify-content: center;
@@ -55,11 +62,13 @@ form {
 /* 基本スタイル (すべてのオレンジ色ボタンの共通定義) */
 /* ---------------------------------------------------- */
 
+/* 全てのフォーム内のsubmitボタン、nav-buttons内のボタン、list-header内の切り替えボタンに適用 */
 button[type="submit"],
 .nav-buttons button,
 .list-header .list-toggle-button {
 	background-color: #FF7F00;
 	color: white;
+	/* パディングとフォントサイズは個別に設定するか、この後に上書き */
 	padding: 12px 24px;
 	font-size: 18px;
 	border: none;
@@ -79,6 +88,7 @@ button:hover,
 /* top.html用（nav-buttons と list-header） */
 /* ---------------------------------------------------- */
 
+/* 新規追加ボタンを横並び中央寄せにするコンテナ */
 .nav-buttons {
 	display: flex;
 	justify-content: center;
@@ -87,39 +97,47 @@ button:hover,
 	flex-wrap: wrap;
 }
 
+/* nav-buttons内のフォームに余白がないようにリセット */
 .nav-buttons form {
 	margin: 0;
 }
 
+/* 修正: 見出しと切り替えボタンを並列に配置するコンテナ */
 .list-header {
     display: flex;
+    /* 子要素を右端に寄せる */
     justify-content: flex-end; 
     align-items: flex-end; 
     gap: 20px;               
     margin-bottom: -20px;
     
+    /* DataTablesのラッパー(.dataTables_wrapper)と幅を合わせる */
     width: 90%; 
     max-width: 800px;
-    margin-left: auto;
+    margin-left: auto; /* 中央寄せ */
     margin-right: auto;
-    position: relative;
+    position: relative; /* ボタンの absolute 配置の基準にする */
 }
 
+/* 修正: list-header内の h2.subtitle のスタイル調整 */
 .list-header h2.subtitle {
     margin-top: 40px;
     margin-bottom: 20px; 
     text-align: center;
+    /* h2がリスト全体の幅を占め、中央に表示されるようにする */
     width: 100%;
 }
 
+/* 修正: 切り替えボタン (list-toggle-button) のスタイル調整 - サイズを小さくする */
 .list-header .list-toggle-button {
     padding: 8px 16px;
     font-size: 14px;
     margin-bottom: 20px; 
     
+    /* ボタンを右上に固定する */
     position: absolute;
-    top: 38px;
-    right: 0;
+    top: 38px; /* h2.subtitle のマージンと高さを考慮して調整 */
+    right: 0; /* list-header の右端に合わせる */
 }
 
 /* ---------------------------------------------------- */
@@ -167,11 +185,13 @@ button:hover,
 /* login.html 用 */
 /* ---------------------------------------------------- */
 
+.loginheader {
+	height: 50px;
+}
 .login-page-layout {
-	display: flex;
 	justify-content: center;
-	align-items: flex-start;
 	min-height: 100vh;
+    flex-direction: column; 
 }
 
 .login-container {
@@ -182,10 +202,10 @@ button:hover,
 	width: 100%;
 	max-width: 400px;
 	box-sizing: border-box;
-	margin-top: 80px;
-	margin-bottom: 0;
+	margin: auto; 
+	margin-top: 20px; 
+	margin-bottom: 50px; 
 }
-
 .login-container h1,
 .login-container h2 {
 	text-align: center;
@@ -240,6 +260,7 @@ button:hover,
 /* top.html用（一覧テーブル） */
 /* ---------------------------------------------------- */
 
+/* DataTablesのラッパー要素に最大幅と中央寄せを適用し、幅の変動を防ぐ */
 .dataTables_wrapper {
     width: 90%;
     max-width: 800px;
@@ -247,9 +268,9 @@ button:hover,
 }
 
 .title-table {
-	width: 100% !important;
-	max-width: none;
-	margin: 0;
+	width: 100% !important; /* ラッパー要素に対して100%を強制 */
+	max-width: none; /* ラッパー要素が幅を持つため、テーブル自体には不要 */
+	margin: 0; /* ラッパー要素で中央寄せするためマージンをリセット */
 	border-collapse: collapse;
 	background-color: #fff;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -270,6 +291,7 @@ button:hover,
 
 .title-table th:nth-child(3),
 .title-table td:nth-child(3) {
+	/* URLの幅を調整し、合計を100%にする (8% + 45% + 47% = 100%) */
 	width: 40%;
 }
 
@@ -413,6 +435,7 @@ select {
 		align-items: center;
 	}
 
+	/* nav-buttons内のボタンとsubmitボタンのサイズをスマホ用に調整 */
 	button[type="submit"],
 	.nav-buttons button {
 		font-size: 16px;
@@ -421,6 +444,7 @@ select {
 		max-width: 300px;
 	}
     
+    /* list-header スマホ対応 */
     .list-header {
         flex-direction: column; 
         gap: 5px;
@@ -429,8 +453,9 @@ select {
         max-width: none;
         margin-left: auto;
         margin-right: auto;
+        /* スマホでは左寄せに戻す */
         justify-content: flex-start;
-        position: static;
+        position: static; /* position: absolute を解除 */
     }
 
     .list-header h2.subtitle {
@@ -447,11 +472,12 @@ select {
         font-size: 16px; 
         padding: 10px 20px;
 		margin-right: 10px;
+        /* スマホではボタンのpositionを解除し、中央寄せに戻す */
         position: static;
         margin-left: auto;
         margin-right: auto;
-        top: auto;
-        right: auto;
+        top: auto; /* absolute の設定を解除 */
+        right: auto; /* absolute の設定を解除 */
     }
 
 
@@ -462,7 +488,7 @@ select {
 	}
     
     .dataTables_wrapper {
-        width: 100%;
+        width: 100%; /* スマホでは画面いっぱいに広げる */
         max-width: none;
         margin: 20px auto;
     }
@@ -486,6 +512,7 @@ select {
 		box-sizing: border-box;
 	}
     
+    /* ラベルのフォントサイズをスマホで明確に指定 */
     .detail-form label,
     .input-form label {
         font-size: 16px;
@@ -495,7 +522,9 @@ select {
 	textarea,
 	select {
 		margin-bottom: 10px;
+		/* フォントサイズを16pxに統一 */
 		font-size: 16px; 
+        /* パディングを大きくして、入力欄の縦幅を広げる */
         padding: 10px; 
 	}
 
@@ -506,16 +535,18 @@ select {
 
 	.button-group a,
 	.button-group button {
+		/* 詳細画面のボタンと入力画面のボタンの幅を100%に統一 */
 		width: 100%; 
 		text-align: center;
 	}
     
+    /* 🚀 追加: input画面の送信ボタンの max-width 制限を解除し、.button-group の 100% が適用されるようにする */
     .input-form button[type="submit"] {
         max-width: none; 
     }
 
 	.login-container {
-		margin-top: 50px;
+		margin-top: 3.5px;
 		margin-bottom: 0;
 		padding: 1em;
 		box-shadow: none;

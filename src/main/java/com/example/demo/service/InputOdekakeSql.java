@@ -42,7 +42,7 @@ public class InputOdekakeSql {
 
 	public boolean updateOdekakeInfo(OdekakeDto odekakeDto) {
 
-		String sql = "UPDATE odekakeinfo SET title = ?, body = ?, url1 = ?, url2 = ?, season = ?, remarks = ?, created_by = ? WHERE ID = ?";
+		String sql = "UPDATE odekakeinfo SET title = ?, body = ?, url1 = ?, url2 = ?, season = ?, remarks = ? WHERE ID = ?";
 		try (Connection conn = DbConnector.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -52,8 +52,7 @@ public class InputOdekakeSql {
 			pstmt.setString(4, odekakeDto.getUrl2());
 			pstmt.setString(5, odekakeDto.getSeason());
 			pstmt.setString(6, odekakeDto.getRemarks());
-			pstmt.setString(7, odekakeDto.getCreatedBy());
-			pstmt.setInt(8, odekakeDto.getId());
+			pstmt.setInt(7, odekakeDto.getId());
 
 			pstmt.executeUpdate();
 			return true;

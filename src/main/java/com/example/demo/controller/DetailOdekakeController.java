@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +18,16 @@ public class DetailOdekakeController {
 	private DetailOdekakeSql detailOdekakeSql;
 
 	@GetMapping("/detailOdekake")
-	public String detailOdekake(@RequestParam("id") int id, Model model) {
+	public String detailOdekake(@RequestParam("id") int id, Model model, HttpSession session) {
 		OdekakeDto dto = detailOdekakeSql.selectById(id);
 		dto.setId(id);
 		String createdAt = dto.getCreatedAt(); // 例: "2025-11-07 13:07:04.243523"
 		String dateOnly = createdAt.split(" ")[0]; // "2025-11-07"
+		String username = (String) session.getAttribute("username");
+
 		model.addAttribute("createdAtFormatted", dateOnly);
 		model.addAttribute("odekakeDto", dto);
+		model.addAttribute("username", username);
 		return "detailOdekake"; // ← 詳細ページのテンプレート名
 	}
 

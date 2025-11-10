@@ -18,6 +18,10 @@
 
 	<h1>おでかけ入力画面</h1>
 
+	<div th:if="${errorMessage}" class="error-message">
+		<p th:text="${errorMessage}"></p>
+	</div>
+
 	<form th:action="${mode == 'edit'} ? @{/updateOdekake(id=${odekakeDto.id})} : @{/saveOdekakeInfo}" method="post"
 		th:object="${odekakeDto}" class="input-form">
 		<label for="title">タイトル:</label>
