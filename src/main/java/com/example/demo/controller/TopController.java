@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,10 +22,14 @@ public class TopController {
 	private DetailOdekakeSql detailOdekakeSql;
 
 	@PostMapping("/inputOdekakeNew")
-	public String showInputForm(Model model, HttpSession session) {
+	public String showInputForm(@RequestParam("category") String category, @ModelAttribute OdekakeDto odekakeDto,
+			Model model, HttpSession session) {
+		OdekakeDto dto = new OdekakeDto();
+		dto.setCategory(category);
+
 		String username = (String) session.getAttribute("username");
 
-		model.addAttribute("odekakeDto", new OdekakeDto());
+		model.addAttribute("odekakeDto", dto);
 		model.addAttribute("username", username);
 		model.addAttribute("mode", "new");
 
@@ -35,6 +40,7 @@ public class TopController {
 	public String inputOdekake(@RequestParam("id") int id, HttpSession session, Model model) {
 		OdekakeDto dto = detailOdekakeSql.selectById(id);
 		dto.setId(id);
+
 		model.addAttribute("odekakeDto", dto);
 		model.addAttribute("mode", "edit"); // ← 編集モードを渡す
 		model.addAttribute("username", session.getAttribute("username"));

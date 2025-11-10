@@ -15,7 +15,7 @@ public class InputOdekakeSql {
 
 	public boolean insertOdekakeInfo(OdekakeDto odekakeDto) {
 
-		String sql = "INSERT INTO odekakeinfo (id, title, body, url1, url2, season, remarks, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO odekakeinfo (id, title, body, url1, url2, season, remarks, created_by, place, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection conn = DbConnector.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -27,6 +27,8 @@ public class InputOdekakeSql {
 			pstmt.setString(6, odekakeDto.getSeason());
 			pstmt.setString(7, odekakeDto.getRemarks());
 			pstmt.setString(8, odekakeDto.getCreatedBy());
+			pstmt.setString(9, odekakeDto.getPlace());
+			pstmt.setString(10, odekakeDto.getCategory());
 
 			pstmt.executeUpdate();
 			return true;

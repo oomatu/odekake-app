@@ -19,6 +19,9 @@ public class DetailOdekakeController {
 	public String detailOdekake(@RequestParam("id") int id, Model model) {
 		OdekakeDto dto = detailOdekakeSql.selectById(id);
 		dto.setId(id);
+		String createdAt = dto.getCreatedAt(); // 例: "2025-11-07 13:07:04.243523"
+		String dateOnly = createdAt.split(" ")[0]; // "2025-11-07"
+		model.addAttribute("createdAtFormatted", dateOnly);
 		model.addAttribute("odekakeDto", dto);
 		return "detailOdekake"; // ← 詳細ページのテンプレート名
 	}

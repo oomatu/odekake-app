@@ -34,6 +34,8 @@ public class DetailOdekakeSql {
 					dto.setRemarks(rs.getString("REMARKS"));
 					dto.setCreatedBy(rs.getString("CREATED_BY"));
 					dto.setCreatedAt(rs.getString("CREATED_AT"));
+					dto.setPlace(rs.getString("PLACE"));
+
 				}
 			}
 

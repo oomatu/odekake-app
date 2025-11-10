@@ -25,6 +25,9 @@
 
 		<label for="body">本文:</label>
 		<textarea id="body" th:field="*{body}" rows="5" readonly></textarea>
+
+		<label for="place">場所:</label>
+		<textarea id="place" th:field="*{place}" rows="1" readonly></textarea>
         
 		<label>サイトURL1:</label>
 		<p th:if="*{url1}">
@@ -54,7 +57,8 @@
             readonly />
 
 		<p>作成者: <span th:text="*{createdBy}">作成者</span></p>
-		<p>作成日時: <span th:text="*{createdAt}">作成日時</span></p>
+		<p>作成日時: <span th:text="${createdAtFormatted}">作成日時</span></p>
+
 
 		<div class="button-group">
 			<a th:href="@{/backtop}" class="back-button">戻る</a>

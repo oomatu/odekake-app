@@ -7,6 +7,7 @@ public class OdekakeSummaryDto {
 	private String visited;
 	private String url1;
 	private String createdBy;
+	private String category;
 
 	// コンストラクタ（空のものと全フィールド付き）
 	public OdekakeSummaryDto() {
@@ -59,4 +60,13 @@ public class OdekakeSummaryDto {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 }

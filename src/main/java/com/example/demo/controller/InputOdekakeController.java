@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,9 +36,18 @@ public class InputOdekakeController {
 			String username = (String) session.getAttribute("username");
 			LocalDate today = LocalDate.now();
 
-			// タイトル一覧を取得（例：List<String>）
-			List<OdekakeSummaryDto> titleList = topSql.getAllTitles();
-			model.addAttribute("titleList", titleList);
+			List<OdekakeSummaryDto> allTitles = topSql.getAllTitles();
+
+			List<OdekakeSummaryDto> placeList = allTitles.stream()
+					.filter(dto -> "P".equals(dto.getCategory()))
+					.collect(Collectors.toList());
+
+			List<OdekakeSummaryDto> restaurantList = allTitles.stream()
+					.filter(dto -> "R".equals(dto.getCategory()))
+					.collect(Collectors.toList());
+
+			model.addAttribute("placeList", placeList);
+			model.addAttribute("restaurantList", restaurantList);
 			model.addAttribute("username", username);
 			model.addAttribute("today", today);
 
@@ -51,8 +61,18 @@ public class InputOdekakeController {
 	public String backInputOdekake(HttpSession session, Model model) {
 		String username = (String) session.getAttribute("username");
 
-		List<OdekakeSummaryDto> titleList = topSql.getAllTitles();
-		model.addAttribute("titleList", titleList);
+		List<OdekakeSummaryDto> allTitles = topSql.getAllTitles();
+
+		List<OdekakeSummaryDto> placeList = allTitles.stream()
+				.filter(dto -> "P".equals(dto.getCategory()))
+				.collect(Collectors.toList());
+
+		List<OdekakeSummaryDto> restaurantList = allTitles.stream()
+				.filter(dto -> "R".equals(dto.getCategory()))
+				.collect(Collectors.toList());
+
+		model.addAttribute("placeList", placeList);
+		model.addAttribute("restaurantList", restaurantList);
 		model.addAttribute("username", username);
 
 		return "top";

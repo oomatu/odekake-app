@@ -18,7 +18,7 @@ public class TopSql {
 	public List<OdekakeSummaryDto> getAllTitles() {
 		List<OdekakeSummaryDto> list = new ArrayList<>();
 
-		String sql = "SELECT ID, TITLE, VISITED, URL1, CREATED_BY FROM ODEKAKEINFO ORDER BY ID ASC";
+		String sql = "SELECT ID, TITLE, VISITED, URL1, CATEGORY FROM ODEKAKEINFO ORDER BY ID ASC";
 		try (Connection conn = DbConnector.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -29,7 +29,7 @@ public class TopSql {
 				dto.setTitle(rs.getString("TITLE"));
 				dto.setVisited(rs.getString("VISITED"));
 				dto.setUrl1(rs.getString("URL1"));
-				dto.setCreatedBy(rs.getString("CREATED_BY"));
+				dto.setCategory(rs.getString("CATEGORY"));
 				list.add(dto);
 			}
 
