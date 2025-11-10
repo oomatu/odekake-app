@@ -278,18 +278,18 @@ button:hover,
 
 .title-table th:nth-child(1),
 .title-table td:nth-child(1) {
-	width: 8%;
+	width: 10%;
 }
 
 .title-table th:nth-child(2),
 .title-table td:nth-child(2) {
-	width: 45%;
+	width: 50%;
 }
 
 .title-table th:nth-child(3),
 .title-table td:nth-child(3) {
 	/* URLの幅を調整し、合計を100%にする (8% + 45% + 47% = 100%) */
-	width: 47%;
+	width: 40%;
 }
 
 .title-table td:nth-child(3) {
@@ -437,7 +437,7 @@ select {
 	.nav-buttons button {
 		font-size: 16px;
 		padding: 10px 20px;
-		width: 90%;
+		width: 105%;
 		max-width: 300px;
 	}
     
