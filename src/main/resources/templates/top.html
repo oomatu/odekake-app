@@ -17,7 +17,7 @@
 		</div>
 	</header>
 
-	<h1 style="text-align: center; font-size: 37px;">
+	<h1>
 		おでかけ記録
 		<img src="/images/miffy.png" alt="ミッフィー"
 			style="height: 50px; vertical-align: middle; margin-left: 5px; margin-top: -16px;">
@@ -31,22 +31,29 @@
 
 		<form th:action="@{/inputOdekakeNew}" method="post">
 			<input type="hidden" name="category" value="R" />
-			<button type="submit">追加🍚：ご飯屋さん</button>
+			<button type="submit">追加🍚：ごはん</button>
 		</form>
 	</div>
 
+	<div class="list-header">
+		<h2 class="subtitle" id="current-list-title">おでかけリスト（場所🎡）</h2>
+
+		<button class="list-toggle-button" id="show-restaurant-button">表示切替：ご飯屋さん🍚</button>
+
+		<button class="visited-toggle-button" id="toggle-visited">訪問状況を切り替える</button>
+
+		<span class="current-view" id="current-visited-status">表示：全件</span>
+	</div>
+
 	<div id="place-section">
-        <div class="list-header">
-		    <h2 class="subtitle">🎡行きたい場所</h2>
-            <button type="button" id="show-restaurant" class="list-toggle-button">表示切替：ご飯屋さん🍚</button>
-        </div>
-        
-		<table class="title-table" id="place-table">
+		<table id="place-table" class="title-table">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>タイトル</th>
 					<th>URL</th>
+					<th>訪問状況</th>
+					<th>作成者</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,23 +64,22 @@
 							th:text="${info.title}">タイトル</a>
 					</td>
 					<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
+					<td th:text="${info.visited}">VISITED</td>
+					<td th:text="${info.createdBy}">CREATED_BY</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 
 	<div id="restaurant-section" style="display: none;">
-        <div class="list-header">
-		    <h2 class="subtitle">🍚行きたいご飯屋さん</h2>
-            <button type="button" id="show-place" class="list-toggle-button">表示切替：行きたい場所🎡</button>
-        </div>
-        
-		<table class="title-table" id="restaurant-table">
+		<table id="restaurant-table" class="title-table">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>タイトル</th>
 					<th>URL</th>
+					<th>訪問状況</th>
+					<th>作成者</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -84,6 +90,8 @@
 							th:text="${info.title}">タイトル</a>
 					</td>
 					<td><a th:href="${info.url1}" th:text="${info.url1}">URL</a></td>
+					<td th:text="${info.visited}">VISITED</td>
+					<td th:text="${info.createdBy}">CREATED_BY</td>
 				</tr>
 			</tbody>
 		</table>
@@ -93,37 +101,87 @@
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script>
 		$(document).ready(function () {
-			// DataTablesの初期化
-            // DataTablesインスタンスを変数に格納します
 			const placeTable = $('#place-table').DataTable({
 				language: {url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/ja.json"},
 				order: [],
-				columnDefs: [{targets: [0, 1, 2], orderable: false}]
+				columnDefs: [
+					{targets: [0, 1, 2], orderable: false},
+					{targets: [3, 4], visible: false}
+				]
 			});
 
 			const restaurantTable = $('#restaurant-table').DataTable({
 				language: {url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/ja.json"},
 				order: [],
-				columnDefs: [{targets: [0, 1, 2], orderable: false}]
-			});
-            
-            // リスト切り替えの処理
-			$('#show-place').click(function () {
-				$('#place-section').show();
-				$('#restaurant-section').hide();
-                // 表示された後に列幅を調整
-                placeTable.columns.adjust().draw();
+				columnDefs: [
+					{targets: [0, 1, 2], orderable: false},
+					{targets: [3, 4], visible: false}
+				]
 			});
 
-			$('#show-restaurant').click(function () {
-				$('#place-section').hide();
-				$('#restaurant-section').show();
-                // 表示された後に列幅を調整
-                restaurantTable.columns.adjust().draw();
+			let currentCategory = 'place';
+
+			$('#show-restaurant-button').click(function () {
+				currentCategory = currentCategory === 'place' ? 'restaurant' : 'place';
+
+				if (currentCategory === 'restaurant') {
+					$('#place-section').hide();
+					$('#restaurant-section').show();
+					$('#current-list-title').text('おでかけリスト（ごはん🍚）');
+					$(this).text('表示切替：場所🎡');
+					resetVisitedFilter(false);
+					restaurantTable.columns.adjust().draw();
+				} else {
+					$('#restaurant-section').hide();
+					$('#place-section').show();
+					$('#current-list-title').text('おでかけリスト（場所🎡）');
+					$(this).text('表示切替：ご飯屋さん🍚');
+					resetVisitedFilter(false);
+					placeTable.columns.adjust().draw();
+				}
 			});
+
+			let visitedMode = 0;
+
+			const tables = {
+				'place': placeTable,
+				'restaurant': restaurantTable
+			};
+
+			/**
+			 * @param {boolean} changeMode - visitedModeをトグルするかどうか (true: トグルする, false: トグルしない/現在のモードを維持)
+			 */
+			function resetVisitedFilter(changeMode) {
+				const currentTable = tables[currentCategory];
+
+				if (changeMode) {
+					visitedMode = (visitedMode + 1) % 3;
+				} else {
+					visitedMode = 0;
+				}
+
+				let filterValue = '';
+				let statusText = '表示：全件';
+
+				if (visitedMode === 1) {
+					filterValue = 'Y';
+					statusText = '表示：行ったことある';
+				} else if (visitedMode === 2) {
+					filterValue = 'N';
+					statusText = '表示：行ったことがない';
+				}
+
+				currentTable.columns(3).search(filterValue).draw();
+				$('#current-visited-status').text(statusText);
+			}
+
+			$('#toggle-visited').click(function () {
+				resetVisitedFilter(true);
+			});
+
+			resetVisitedFilter(false);
 		});
 	</script>
-
 </body>
 
 </html>

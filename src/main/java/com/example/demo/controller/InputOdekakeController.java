@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes; // ★必ずインポート
 
 import com.example.demo.dto.OdekakeDto;
 import com.example.demo.dto.OdekakeSummaryDto;
@@ -28,32 +29,15 @@ public class InputOdekakeController {
 	private TopSql topSql;
 
 	@PostMapping("/saveOdekakeInfo")
-	public String saveOdekakeInfo(@ModelAttribute OdekakeDto odekakeDto, HttpSession session, Model model) {
+	public String saveOdekakeInfo(@ModelAttribute OdekakeDto odekakeDto, HttpSession session, RedirectAttributes ra, Model model) {
 
 		odekakeDto.setCreatedBy((String) session.getAttribute("username"));
 		boolean rs = inputOdekakeService.insertOdekakeInfo(odekakeDto);
+
 		if (rs) {
-			String username = (String) session.getAttribute("username");
-			LocalDate today = LocalDate.now();
-
-			List<OdekakeSummaryDto> allTitles = topSql.getAllTitles();
-
-			List<OdekakeSummaryDto> placeList = allTitles.stream()
-					.filter(dto -> "P".equals(dto.getCategory()))
-					.collect(Collectors.toList());
-
-			List<OdekakeSummaryDto> restaurantList = allTitles.stream()
-					.filter(dto -> "R".equals(dto.getCategory()))
-					.collect(Collectors.toList());
-
-			model.addAttribute("placeList", placeList);
-			model.addAttribute("restaurantList", restaurantList);
-			model.addAttribute("username", username);
-			model.addAttribute("today", today);
-
-			return "top";
+			return "redirect:/backtop";
 		} else {
-			model.addAttribute("errorMessage", "ごめんなさい！エラーなので報告してください！！");
+			model.addAttribute("errorMessage", "ごめんなさい！エラーなので開発者に報告してください！");
 			return "inputOdekake";
 		}
 	}
@@ -61,6 +45,7 @@ public class InputOdekakeController {
 	@GetMapping("/backtop")
 	public String backInputOdekake(HttpSession session, Model model) {
 		String username = (String) session.getAttribute("username");
+		LocalDate today = LocalDate.now();
 
 		List<OdekakeSummaryDto> allTitles = topSql.getAllTitles();
 
@@ -75,35 +60,19 @@ public class InputOdekakeController {
 		model.addAttribute("placeList", placeList);
 		model.addAttribute("restaurantList", restaurantList);
 		model.addAttribute("username", username);
+		model.addAttribute("today", today);
 
 		return "top";
 	}
 
 	@PostMapping("/updateOdekake")
-	public String inputEdit(@ModelAttribute OdekakeDto odekakeDto, HttpSession session, Model model) {
+	public String inputEdit(@ModelAttribute OdekakeDto odekakeDto, HttpSession session, RedirectAttributes ra, Model model) {
 		boolean rs = inputOdekakeService.updateOdekakeInfo(odekakeDto);
+
 		if (rs) {
-			String username = (String) session.getAttribute("username");
-			LocalDate today = LocalDate.now();
-
-			List<OdekakeSummaryDto> allTitles = topSql.getAllTitles();
-
-			List<OdekakeSummaryDto> placeList = allTitles.stream()
-					.filter(dto -> "P".equals(dto.getCategory()))
-					.collect(Collectors.toList());
-
-			List<OdekakeSummaryDto> restaurantList = allTitles.stream()
-					.filter(dto -> "R".equals(dto.getCategory()))
-					.collect(Collectors.toList());
-
-			model.addAttribute("placeList", placeList);
-			model.addAttribute("restaurantList", restaurantList);
-			model.addAttribute("username", username);
-			model.addAttribute("today", today);
-
-			return "top";
+			return "redirect:/backtop";
 		} else {
-			model.addAttribute("errorMessage", "ごめんなさい！エラーなので報告してください！！");
+			model.addAttribute("errorMessage", "ごめんなさい！エラーなので開発者に報告してください！");
 			return "inputOdekake";
 		}
 	}

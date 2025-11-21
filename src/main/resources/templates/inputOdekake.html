@@ -22,8 +22,11 @@
 		<p th:text="${errorMessage}"></p>
 	</div>
 
-	<form th:action="${mode == 'edit'} ? @{/updateOdekake(id=${odekakeDto.id})} : @{/saveOdekakeInfo}" method="post"
+	<form th:action="${mode == 'edit'} ? @{/updateOdekake} : @{/saveOdekakeInfo}" method="post"
 		th:object="${odekakeDto}" class="input-form">
+
+		<input type="hidden" th:if="${mode == 'edit'}" th:field="*{id}" />
+
 		<label for="title">タイトル:</label>
 		<input type="text" id="title" th:field="*{title}" maxlength="30" required />
 
@@ -48,6 +51,12 @@
 			<option value="いつでも">いつでも</option>
 		</select>
 
+		<label for="visited">行ったことがあるか:</label>
+		<select id="visited" th:field="*{visited}">
+			<option value="N">行ってない！</option>
+			<option value="Y">行った！</option>
+		</select>
+		
 		<label for="remarks">備考:</label>
 		<textarea id="remarks" th:field="*{remarks}" rows="3"></textarea>
 

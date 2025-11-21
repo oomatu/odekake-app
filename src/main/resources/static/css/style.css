@@ -4,7 +4,7 @@ body {
 	background-color: #f0f8ff;
 	margin: 0;
 	padding: 0;
-	overflow-x: hidden;
+	/* overflow-x: hidden; を削除 */
 	box-sizing: border-box;
 }
 
@@ -14,14 +14,8 @@ select {
 	font-size: 16px;
 }
 
-html {
-	touch-action: manipulation;
-}
-
-@viewport {
-	zoom: 1.0;
-	width: device-width;
-}
+/* html { touch-action: manipulation; } を削除 (ブラウザがデフォルトで最適化するため) */
+/* @viewport は非推奨のため削除 */
 
 * {
 	box-sizing: border-box;
@@ -32,18 +26,22 @@ header {
 	color: white;
 	padding: 15px;
 	text-align: center;
-	width: 100%; 
+	width: 100%;
 }
 
 .header-info {
 	font-size: 16px;
 }
 
+/* top.html の <h1> のインラインスタイルを削除したため、ここで再定義 */
 h1 {
 	text-align: center;
 	margin-top: 40px;
 	color: #333;
+    font-size: 37px; /* top.html のインラインスタイルをここに移動 */
 }
+/* top.htmlの <h1> 内の画像スタイルはHTML側に残しています */
+
 
 h2.subtitle {
 	text-align: center;
@@ -65,7 +63,7 @@ form {
 /* 全てのフォーム内のsubmitボタン、nav-buttons内のボタン、list-header内の切り替えボタンに適用 */
 button[type="submit"],
 .nav-buttons button,
-.list-header .list-toggle-button {
+.list-header button { /* .list-toggle-button を .list-header button に変更し簡略化 */
 	background-color: #FF7F00;
 	color: white;
 	/* パディングとフォントサイズは個別に設定するか、この後に上書き */
@@ -79,7 +77,7 @@ button[type="submit"],
 
 button:hover,
 .nav-buttons button:hover,
-.list-header .list-toggle-button:hover {
+.list-header button:hover {
 	background-color: #e67300;
 }
 
@@ -128,22 +126,41 @@ button:hover,
     width: 100%;
 }
 
-/* 修正: 切り替えボタン (list-toggle-button) のスタイル調整 - サイズを小さくする */
-.list-header .list-toggle-button {
+/* 修正: 切り替えボタン (list-header button) のスタイル調整 - サイズを小さくする */
+.list-header button { /* .list-toggle-button を .list-header button に変更 */
     padding: 8px 16px;
     font-size: 14px;
     margin-bottom: 20px; 
-    
-    /* ボタンを右上に固定する */
+}
+
+/* 訪問状況の表示（テキスト）のスタイル調整 */
+.current-view {
+    font-size: 14px;
+    color: #555;
+    /* ボタンの絶対配置に対応して配置 */
     position: absolute;
+    top: 70px; /* h2.subtitle の下あたりに配置 */
+    right: 0; 
+}
+
+/* リスト切り替えボタンを右上に固定する */
+#show-restaurant-button {
     top: 38px; /* h2.subtitle のマージンと高さを考慮して調整 */
     right: 0; /* list-header の右端に合わせる */
 }
+
+/* 訪問状況切り替えボタンの配置 */
+#toggle-visited {
+    top: 38px;
+    right: 170px; /* リスト切り替えボタンの左側に配置 (幅に合わせて調整) */
+}
+
 
 /* ---------------------------------------------------- */
 /* DataTables (トップ画面のプルダウン・検索) の調整 (コンパクト表示を維持) */
 /* ---------------------------------------------------- */
 
+/* DataTablesのラベルとセレクトボックスのスタイルは、冗長ではないため維持 */
 .dataTables_wrapper .dataTables_length label {
 	font-size: 14px;
 	font-weight: normal;
@@ -185,13 +202,15 @@ button:hover,
 /* login.html 用 */
 /* ---------------------------------------------------- */
 
+/* login-page-layout の display: flex, justify-content: center, align-items: center は不要なので削除 */
 .loginheader {
 	height: 50px;
 }
 .login-page-layout {
-	justify-content: center;
+	/* justify-content: center; を削除 */
 	min-height: 100vh;
     flex-direction: column; 
+    /* body {display: flex;} の指定が元々ないため、上記は不要 */
 }
 
 .login-container {
@@ -243,10 +262,11 @@ button:hover,
 	width: 100%;
 	max-width: 250px;
 	padding: 0.7em;
-	background-color: #FF7F00;
-	color: white;
-	border: none;
-	border-radius: 4px;
+	/* 背景色、文字色は共通ボタンのスタイルで定義されているため削除 */
+	/* background-color: #FF7F00; */
+	/* color: white; */
+	/* border: none; */
+	/* border-radius: 4px; */
 	font-size: 1em;
 }
 
@@ -279,21 +299,27 @@ button:hover,
 	border: 2px solid #FF7F00;
 }
 
+/* 不要な幅指定を削除し、DataTablesに任せるか、よりシンプルに */
+/* 訪問状況と作成者を非表示にしているため、残りの3列で100%になるよう調整 */
 .title-table th:nth-child(1),
 .title-table td:nth-child(1) {
-	width: 10%;
+	width: 10%; /* ID */
 }
 
 .title-table th:nth-child(2),
 .title-table td:nth-child(2) {
-	width: 50%;
+	width: 50%; /* タイトル */
 }
 
 .title-table th:nth-child(3),
 .title-table td:nth-child(3) {
-	/* URLの幅を調整し、合計を100%にする (8% + 45% + 47% = 100%) */
-	width: 40%;
+	width: 40%; /* URL */
 }
+
+/* VISITED(4番目)とCREATED_BY(5番目)は非表示のため幅指定を削除 */
+/* .title-table th:nth-child(4), .title-table td:nth-child(4) { width: 0%; } */
+/* .title-table th:nth-child(5), .title-table td:nth-child(5) { width: 0%; } */
+
 
 .title-table td:nth-child(3) {
 	white-space: nowrap;
@@ -408,6 +434,83 @@ select {
 }
 
 /* ---------------------------------------------------- */
+/* top.html用 (LINE共有ポップアップ) ★新規追加 */
+/* ---------------------------------------------------- */
+
+.share-popup-overlay {
+    /* 画面全体に広がるオーバーレイ */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 他の要素より手前に表示 */
+}
+
+.share-popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.share-popup-content h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+}
+
+.share-popup-content p {
+    margin: 15px 0 25px 0;
+    color: #555;
+}
+
+.popup-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* LINE共有ボタンとスキップボタンのベーススタイル */
+.line-share-button-style,
+.skip-button-style {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+/* LINE共有ボタンのスタイル */
+.line-share-button-style {
+    background-color: #00C300; /* LINEカラー */
+    color: white;
+}
+
+.line-share-button-style:hover {
+    opacity: 0.9;
+}
+
+/* スキップボタンのスタイル */
+.skip-button-style {
+    background-color: #ccc;
+    color: #333;
+}
+
+.skip-button-style:hover {
+    background-color: #bbb;
+}
+
+/* ---------------------------------------------------- */
 /* スマホ対応 (max-width: 600px) */
 /* ---------------------------------------------------- */
 
@@ -416,10 +519,15 @@ select {
 	body {
 		padding: 0;
 		background-color: #fff;
-		overflow-x: hidden;
+		/* overflow-x: hidden; を削除 */
 	}
+    
+    /* <h1>のスタイルをスマホ用に調整 */
+    h1 {
+        font-size: 25px;
+        margin-top: 20px;
+    }
 
-	h1,
 	h2.subtitle {
 		font-size: 25px;
 		margin-top: 20px;
@@ -440,8 +548,9 @@ select {
 	.nav-buttons button {
 		font-size: 16px;
 		padding: 10px 20px;
-		width: 105%;
+		/* width: 105%; を width: auto に戻すか、削除 */
 		max-width: 300px;
+        width: auto;
 	}
     
     /* list-header スマホ対応 */
@@ -465,19 +574,28 @@ select {
         width: 100%;
     }
 
-    .list-header .list-toggle-button {
+    .list-header button { /* .list-toggle-button を .list-header button に変更 */
         width: 80%; 
+        max-width: 300px; /* 新規追加ボタンと幅を合わせる */
         margin-top: 5px;
         margin-bottom: 10px;
         font-size: 16px; 
         padding: 10px 20px;
-		margin-right: 10px;
+		/* margin-right: 10px; を削除 */
         /* スマホではボタンのpositionを解除し、中央寄せに戻す */
         position: static;
         margin-left: auto;
         margin-right: auto;
         top: auto; /* absolute の設定を解除 */
         right: auto; /* absolute の設定を解除 */
+    }
+    
+    .current-view {
+        position: static;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 5px;
+        text-align: center;
     }
 
 
@@ -540,13 +658,14 @@ select {
 		text-align: center;
 	}
     
-    /* 🚀 追加: input画面の送信ボタンの max-width 制限を解除し、.button-group の 100% が適用されるようにする */
+    /* input画面の送信ボタンの max-width 制限を解除し、.button-group の 100% が適用されるようにする */
     .input-form button[type="submit"] {
         max-width: none; 
     }
 
 	.login-container {
-		margin-top: 3.5px;
+		/* margin-top: 3.5px; を 0 に統一 */
+        margin-top: 0;
 		margin-bottom: 0;
 		padding: 1em;
 		box-shadow: none;
