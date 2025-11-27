@@ -16,8 +16,8 @@
 		</div>
 	</header>
 
-	<h1>おでかけ入力画面</h1>
-
+	<h1 th:text="${mode == 'edit'} ? 'おでかけ編集画面' : 'おでかけ登録画面'"></h1>
+	
 	<div th:if="${errorMessage}" class="error-message">
 		<p th:text="${errorMessage}"></p>
 	</div>
@@ -27,20 +27,20 @@
 
 		<input type="hidden" th:if="${mode == 'edit'}" th:field="*{id}" />
 
-		<label for="title">タイトル:</label>
-		<input type="text" id="title" th:field="*{title}" maxlength="30" required />
+		<label for="title">タイトル <span style="color:rgb(255, 128, 0);">（必須）</span>:</label>
+		<input type="text" id="title" th:field="*{title}" maxlength="30" placeholder="例: 遊園地🎡" required />
 
 		<label for="body">本文:</label>
-		<textarea id="body" th:field="*{body}" rows="5"></textarea>
+		<textarea id="body" th:field="*{body}" rows="5" placeholder="例: 乗り物たくさん乗りたい！"></textarea>
 
 		<label for="place">場所:</label>
-		<textarea id="place" th:field="*{place}" rows="1"></textarea>
-
+		<input type="text" id="place" th:field="*{place}" maxlength="10" placeholder="例: 新宿、渋谷" />
+		
 		<label for="url1">サイトURL1:</label>
-		<input type="text" id="url1" th:field="*{url1}" />
+		<input type="text" id="url1" placeholder="例: https://www." th:field="*{url1}" />
 
 		<label for="url2">サイトURL2:</label>
-		<input type="text" id="url2" th:field="*{url2}" />
+		<input type="text" id="url2" placeholder="例: https://www." th:field="*{url2}" />
 
 		<label for="season">行きたい季節:</label>
 		<select id="season" th:field="*{season}">
@@ -56,7 +56,7 @@
 			<option value="N">行ってない！</option>
 			<option value="Y">行った！</option>
 		</select>
-		
+
 		<label for="remarks">備考:</label>
 		<textarea id="remarks" th:field="*{remarks}" rows="3"></textarea>
 
